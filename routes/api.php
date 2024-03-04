@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController as Auth;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\EmpleadosController;
+use App\Http\Controllers\EquiposController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,11 +17,19 @@ use App\Http\Controllers\EmpleadosController;
 |
 */
 Route::post('login', [Auth::class, 'login']);
-Route::post('logout', [Auth::class, 'logout']);
 Route::post('user/create', [UsersController::class, 'create']);
 
-Route::get('/empleado', [EmpleadosController::class, 'getEmpleados']);
+Route::get('/equipo', [EquiposController::class, 'Index']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+
+// routes/web.php
+
+Route::middleware(['JwtAuth'])->group(function () {
+    Route::get('/equipos/index', [EquiposController::class, 'index']);
+    Route::post('/equipos/store', [EquiposController::class, 'store']);
+    Route::delete('/equipos/destroy/{id}', [EquiposController::class, 'destroy']);
+    Route::post('/equipos/update/{id}', [EquiposController::class, 'update']);
+    Route::post('logout', [Auth::class, 'logout']);
+
 });
