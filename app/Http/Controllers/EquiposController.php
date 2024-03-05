@@ -32,13 +32,13 @@ class EquiposController extends Controller
             'fundacion' => $request->fundacion,
         ]);
 
-        return response() -> json(['Insertado Correctamente'],201);
+        return response()->json(['message' => 'Equipo insertado']);
     }
 
     public function destroy($id=null, Request $request){
         $equipo = Equipo::find($id);
         if(!$equipo){
-            return response() -> json(['Equipo no encontrado', 404]);
+            return response() -> json(['Equipo no encontrado']);
         }
 
         $equipo->delete();
@@ -54,19 +54,19 @@ class EquiposController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json(['errores' => $validator->errors()],421);
+            return response()->json(['errores' => $validator->errors()]);
         }
 
         $equipo = Equipo::find($id);
 
         if(!$equipo){
-            return response() -> json(['Equipo no encontrado', 404]);
+            return response() -> json(['Equipo no encontrado']);
         }
 
         $equipo->nombre = $request->nombre;
         $equipo->apodo = $request->apodo;
         $equipo->fundacion = $request->fundacion;
         $equipo->save();
-        return response() -> json([$equipo, 201]);
+        return response()->json(['message' => 'Equipo actualizado']);
     }
 }
