@@ -31,5 +31,6 @@ Route::middleware(['JwtAuth'])->group(function () {
     Route::delete('/equipos/destroy/{id}', [EquiposController::class, 'destroy']);
     Route::post('/equipos/update/{id}', [EquiposController::class, 'update']);
     Route::post('logout', [Auth::class, 'logout']);
+    Route::get('verificar', [Auth::class, 'verficar']);
 
 });
